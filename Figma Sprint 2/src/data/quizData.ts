@@ -1,0 +1,448 @@
+export interface QuizOption {
+  id: 'A' | 'B' | 'C';
+  text: string;
+}
+
+export interface QuizQuestion {
+  id: number;
+  badge: string;
+  context: string;
+  intro: string; // sentence before the quoted message
+  message?: string; // the quoted message (optional for non-message scenarios)
+  question: string;
+  options: QuizOption[];
+  correct: 'A' | 'B' | 'C';
+  explanations: Record<'A' | 'B' | 'C', string>;
+  discussionPrompt: string; // shown in "Aprender Juntos" mode
+  tip: string;
+}
+
+// ─── TRILHA SÊNIOR ────────────────────────────────────────────────────────────
+
+export const seniorQuestions: QuizQuestion[] = [
+  {
+    id: 1,
+    badge: 'Trilha Sênior · Questão 1 de 10',
+    context: 'O Golpe do Filho — Número Novo',
+    intro: 'Você recebe uma mensagem às 22h de um número desconhecido:',
+    message: '"Mãe, troquei de número! Meu celular quebrou e perdi todos os contatos. Pode salvar esse? Aliás, preciso muito de um PIX agora — pago fornecedor amanhã cedo e o app do banco tá bloqueado. R$1.500 resolve. Te pago assim que chegar em casa."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Faço o PIX imediatamente, pois é urgente e parece ser meu filho.' },
+      { id: 'B', text: 'Ligo para o número antigo do meu filho para confirmar se é ele mesmo.' },
+      { id: 'C', text: 'Pergunto o nome do fornecedor para verificar se a história é verdadeira.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Este é o "Golpe do Falso Filho" — o mais comum no WhatsApp. Nunca faça PIX para número desconhecido sem verificar a identidade. O golpista conta com a pressa e o amor familiar para impedir que você pense.',
+      B: 'Correto! Ligar para o número salvo na sua agenda é a verificação definitiva. Se for golpe, o golpista não atenderá. Se for seu filho de verdade, ele irá te ajudar a entender a situação sem pressa.',
+      C: 'Parcialmente correto. Questionar é melhor que agir, mas o golpista é treinado para inventar histórias convincentes por texto. Só a ligação para o número antigo confirma a identidade real.',
+    },
+    discussionPrompt: 'Conversem: Por que receber uma mensagem de madrugada, quando estamos cansados, nos faz tomar decisões piores? Qual seria o combinado certo a fazer com seus filhos para evitar esse golpe?',
+    tip: 'Nunca faça PIX para um "novo número" de familiar sem ligar para o número antigo primeiro.',
+  },
+  {
+    id: 2,
+    badge: 'Trilha Sênior · Questão 2 de 10',
+    context: 'A Ligação do Banco — Código SMS',
+    intro: 'Você recebe uma ligação de alguém que se apresenta como atendente do seu banco:',
+    message: '"Identificamos uma compra suspeita de R$3.200 no seu cartão. Para cancelar agora, preciso que você confirme o código de 6 dígitos que acabou de chegar no seu celular por SMS."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Passo o código, pois preciso cancelar a compra suspeita o quanto antes.' },
+      { id: 'B', text: 'Digo que não vou passar nenhum código, desligo e ligo para o número do verso do meu cartão.' },
+      { id: 'C', text: 'Peço o nome do atendente e o número do protocolo antes de decidir.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. O código SMS é a sua senha de segurança. Ao passá-lo, você dá ao golpista acesso total à sua conta. Bancos legítimos jamais pedem esse código por telefone.',
+      B: 'Correto! Desligar e ligar para o número oficial (impresso no verso do seu cartão ou no site do banco) é a única forma segura. Nunca retorne a chamada para o número que te ligou.',
+      C: 'Incorreto. O golpista é treinado para dar nome e protocolo falsos. Isso não prova que ele é do banco. O único caminho seguro é ligar para o número oficial.',
+    },
+    discussionPrompt: 'Conversem: Bancos nunca pedem senha, código SMS ou dados completos do cartão por telefone. Vocês já tinham uma regra clara sobre isso na família? Como criar esse combinado agora?',
+    tip: 'Código SMS é igual à sua senha. Nunca compartilhe, nem com quem diz ser do banco.',
+  },
+  {
+    id: 3,
+    badge: 'Trilha Sênior · Questão 3 de 10',
+    context: 'A Mensagem do INSS — Atualização de Cadastro',
+    intro: 'Você recebe uma mensagem no WhatsApp com logo do INSS:',
+    message: '"INSS AVISO URGENTE: Seu benefício será suspenso em 48 horas por falta de atualização cadastral. Clique no link abaixo e atualize agora: inss-gov-br.atualiza.net/beneficio"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Clico no link e preencho meus dados para não perder o benefício.' },
+      { id: 'B', text: 'Não clico. Acesso o site oficial "gov.br/inss" ou ligo para o 135 para verificar.' },
+      { id: 'C', text: 'Encaminho para meus filhos verificarem se é verdadeiro.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. O endereço "inss-gov-br.atualiza.net" é falso — não é o site oficial do governo. Preenchendo seus dados lá, você entrega CPF, senha e dados bancários para criminosos.',
+      B: 'Correto! O INSS só se comunica por canais oficiais. O endereço real é gov.br/inss e o telefone oficial é 135. Urgência e link suspeito são as duas marcas do golpe.',
+      C: 'Parcialmente correto. Pedir ajuda de familiar é sensato, mas você mesmo pode verificar: não clique no link e ligue para o 135. Encaminhar a mensagem pode também disseminar o golpe no grupo.',
+    },
+    discussionPrompt: 'Conversem: Como checar se um endereço de internet é oficial? Pratiquem juntos entrar no site do INSS pelo celular sem usar links de mensagem.',
+    tip: 'O endereço oficial do INSS é gov.br/inss. Qualquer outro link é suspeito.',
+  },
+  {
+    id: 4,
+    badge: 'Trilha Sênior · Questão 4 de 10',
+    context: 'O Técnico do Celular — Acesso Remoto',
+    intro: 'Você recebe uma ligação de alguém que diz ser técnico de suporte:',
+    message: '"Detectamos um vírus no seu celular que está roubando seus dados bancários. Para resolver agora mesmo, instale o aplicativo AnyDesk que vou te enviar — é gratuito e vamos limpar o vírus em minutos."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Instalo o aplicativo para resolver o problema o quanto antes.' },
+      { id: 'B', text: 'Desligo a ligação e peço a um familiar de confiança para verificar o celular pessoalmente.' },
+      { id: 'C', text: 'Pergunto o nome da empresa antes de instalar.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Aplicativos de acesso remoto como AnyDesk dão controle total do seu celular ao golpista. Com isso, ele pode ver sua tela, fazer PIX e transferências sem que você perceba.',
+      B: 'Correto! Empresas legítimas de suporte não ligam sem que você tenha solicitado. Nunca instale aplicativos sob instrução de ligações inesperadas. Um familiar ou técnico de confiança pode verificar pessoalmente.',
+      C: 'Incorreto. O golpista tem nome, empresa e protocolo falsos prontos. Isso não confirma que é legítimo. O simples fato de ligar pedindo para instalar um app já é sinal de golpe.',
+    },
+    discussionPrompt: 'Conversem: Quais aplicativos no celular vocês conhecem e confiam? Combinem que nenhum software novo será instalado sem que o familiar mais novo revise primeiro.',
+    tip: 'Nenhuma empresa legítima liga pedindo para você instalar um aplicativo de acesso remoto.',
+  },
+  {
+    id: 5,
+    badge: 'Trilha Sênior · Questão 5 de 10',
+    context: 'O Funcionário na Porta — Atualização de Documentos',
+    intro: 'Uma pessoa bem vestida bate à sua porta dizendo ser funcionária da sua cooperativa de saúde:',
+    message: 'Ela apresenta um crachá e diz: "Estamos fazendo uma atualização de cadastro presencial. Preciso de uma cópia do seu RG, CPF e do cartão do plano para que seu benefício continue ativo."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Entrego os documentos, pois o crachá parece legítimo.' },
+      { id: 'B', text: 'Peço que aguarde, fecho a porta e ligo para a central oficial da cooperativa para confirmar a visita.' },
+      { id: 'C', text: 'Entrego só o cartão do plano e guardo os demais documentos.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Crachás são fáceis de falsificar. Com RG, CPF e dados do plano, criminosos podem abrir contas, contrair empréstimos e clonar o plano de saúde em seu nome.',
+      B: 'Correto! Nenhuma empresa séria faz atualizações de cadastro sem agendamento prévio. Feche a porta educadamente, ligue para o número oficial (que você mesmo busca — não o que ela fornecer) e confirme.',
+      C: 'Incorreto. O cartão do plano já contém dados suficientes para fraudes. Qualquer documento entregue sem verificação é um risco.',
+    },
+    discussionPrompt: 'Conversem: Quais serviços (banco, plano de saúde, energia) poderiam enviar funcionários à porta? Pesquisem juntos os números oficiais dessas empresas e guardem nos contatos.',
+    tip: 'Visitas legítimas são sempre agendadas com antecedência. Na dúvida, feche a porta e ligue para o número oficial.',
+  },
+  {
+    id: 6,
+    badge: 'Trilha Sênior · Questão 6 de 10',
+    context: 'O Novo Amigo Online — Golpe do Amor',
+    intro: 'Você conheceu alguém em um grupo de oração no Facebook há três semanas. A pessoa é atenciosa e vocês conversam todo dia. Hoje ela manda:',
+    message: '"Estou em viagem de negócios fora do país e tive um imprevisto gravíssimo. Minha carteira foi roubada e preciso de R$800 por PIX para conseguir voltar. Você que é tão especial para mim pode me ajudar?"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Faço o PIX pois essa pessoa tem sido muito atenciosa e parece genuína.' },
+      { id: 'B', text: 'Não faço o PIX. Essa é uma situação clássica de golpe — recuso qualquer transferência para quem conheci só online.' },
+      { id: 'C', text: 'Peço que mande uma foto ao vivo segurando um papel com meu nome para confirmar a identidade.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. O "Golpe do Amor" ou "Golpe da Confiança" usa semanas de afeto para criar intimidade artificial. O pedido de dinheiro urgente de alguém que você nunca encontrou pessoalmente é um sinal inequívoco de golpe.',
+      B: 'Correto! Pessoas legítimas em situações de emergência ligam para consulados, familiares ou amigos próximos — não para amigos recentes de internet. Recuse e, se necessário, bloqueie o contato.',
+      C: 'Parcialmente correto. Verificações visuais podem ser burladas com fotos antigas ou manipuladas. A regra mais segura: nunca transfira dinheiro para quem você conheceu exclusivamente online.',
+    },
+    discussionPrompt: 'Conversem: Como distinguir amizade genuína de manipulação online? Quais são os sinais de alerta em um relacionamento que começa pela internet?',
+    tip: 'Quanto mais atenção e afeto em pouco tempo, maior a suspeita. Golpistas investem em carinho para lucrar depois.',
+  },
+  {
+    id: 7,
+    badge: 'Trilha Sênior · Questão 7 de 10',
+    context: 'O Código do WhatsApp — Sequestro de Conta',
+    intro: 'Um amigo seu manda mensagem pelo WhatsApp:',
+    message: '"Oi! Enviei um código para o seu número por engano quando tentei verificar minha conta nova. Você recebeu um SMS com 6 números? Me passa por favor, é urgente!"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Mando o código, pois é meu amigo e ele pediu com urgência.' },
+      { id: 'B', text: 'Não mando o código. Ligo para meu amigo pelo número que já tenho salvo para confirmar se foi ele.' },
+      { id: 'C', text: 'Pergunto por que ele precisa do código antes de decidir.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. O golpista já está com a conta do seu amigo sequestrada e usa ela para enganar os contatos. O código de 6 dígitos é o código de verificação do SEU WhatsApp — ao enviá-lo, você perde o acesso à sua própria conta.',
+      B: 'Correto! Ao ligar para o número antigo do seu amigo, você descobre que ele não pediu nada. O código SMS de 6 dígitos nunca deve ser compartilhado com ninguém — é a chave da sua conta.',
+      C: 'Parcialmente correto. O golpista dará uma explicação convincente. Nenhuma explicação justifica compartilhar o código. A única ação segura é não passar e verificar por ligação.',
+    },
+    discussionPrompt: 'Conversem: O que acontece quando alguém perde o acesso ao WhatsApp? Pratiquem juntos como ativar a "Verificação em duas etapas" para proteger a conta.',
+    tip: 'O código de 6 dígitos que chega por SMS é a chave do seu WhatsApp. Nunca compartilhe com ninguém.',
+  },
+  {
+    id: 8,
+    badge: 'Trilha Sênior · Questão 8 de 10',
+    context: 'O Plano de Saúde — Cartão Vencido',
+    intro: 'Você recebe uma ligação de alguém que diz ser do seu plano de saúde:',
+    message: '"Seu cartão vence amanhã e se não renovarmos agora seu plano será cancelado. Para continuar com a cobertura, preciso do número do seu cartão, data de validade e o código de segurança atrás para processar a renovação."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Passo os dados, pois não posso ficar sem o plano de saúde.' },
+      { id: 'B', text: 'Desligo, pego o cartão do plano e ligo para o número que está impresso nele.' },
+      { id: 'C', text: 'Peço que enviem um boleto por email para eu avaliar.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Número do cartão, validade e código de segurança são dados suficientes para fazer compras fraudulentas em seu nome. Planos de saúde nunca pedem esses dados por telefone.',
+      B: 'Correto! Ligar para o número oficial que está no verso do seu cartão (ou no contrato) é a única verificação segura. Se houver pendência real, eles confirmarão sem pedir dados sensíveis.',
+      C: 'Parcialmente correto. Pedir tempo é melhor que ceder, mas o golpista pode enviar um boleto falso. A verificação pelo número oficial do cartão é o passo definitivo.',
+    },
+    discussionPrompt: 'Conversem: Onde estão guardados os cartões de saúde, banco e documentos importantes? Criem juntos uma lista com os números oficiais de cada um para usar em emergências.',
+    tip: 'Planos de saúde e bancos nunca pedem o código de segurança do cartão por telefone.',
+  },
+  {
+    id: 9,
+    badge: 'Trilha Sênior · Questão 9 de 10',
+    context: 'O Empréstimo Relâmpago — Taxa Antecipada',
+    intro: 'Você vê um anúncio no Facebook: "Empréstimo fácil para aposentados — aprovação em 24h sem consulta ao SPC". Você entra em contato e o atendente diz:',
+    message: '"Seu empréstimo de R$5.000 foi pré-aprovado! Só precisamos de um depósito de R$150 de taxa de cadastro no CPF para liberar o valor. É procedimento obrigatório do Banco Central."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Pago a taxa, pois R$150 é pouco comparado aos R$5.000 que vou receber.' },
+      { id: 'B', text: 'Recuso. Empréstimos legítimos nunca cobram taxa antecipada antes de liberar o dinheiro.' },
+      { id: 'C', text: 'Peço para ver o contrato assinado antes de pagar a taxa.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Este é o "Golpe da Taxa Antecipada". Após o pagamento, o atendente some e o empréstimo nunca chega. O Banco Central não cobra taxas diretamente dos clientes.',
+      B: 'Correto! Nenhuma instituição financeira legítima exige pagamento antecipado para liberar empréstimo. Essa cobrança em si já é o golpe — não existe o empréstimo de R$5.000.',
+      C: 'Incorreto. O golpista enviará um contrato falso com logo de banco real. O documento é falsificado. A regra é simples: pagamento antecipado para receber empréstimo = golpe.',
+    },
+    discussionPrompt: 'Conversem: Onde é possível conseguir crédito seguro para aposentados? Pesquisem juntos as opções do banco ou cooperativa onde já têm conta.',
+    tip: 'Cobrar qualquer valor antecipado para liberar empréstimo é crime. Sempre.',
+  },
+  {
+    id: 10,
+    badge: 'Trilha Sênior · Questão 10 de 10',
+    context: 'O Prêmio dos Correios — Taxa de Retirada',
+    intro: 'Você recebe a seguinte mensagem no WhatsApp:',
+    message: '"🎉 PARABÉNS! Você foi selecionado no sorteio dos Correios Premiados e ganhou uma Smart TV 55". Para receber, pague a taxa de liberação de R$89,90 via PIX para esta chave: cpf@golpe.com — válido por 24h."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Pago a taxa, pois uma TV de presente vale muito mais que R$90.' },
+      { id: 'B', text: 'Deleto a mensagem. Sorteios legítimos nunca exigem pagamento prévio para receber o prêmio.' },
+      { id: 'C', text: 'Pesquiso no Google se existe esse sorteio dos Correios antes de pagar.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Após o pagamento, você nunca recebe o prêmio. O golpista some. Os Correios não realizam sorteios por WhatsApp e nunca cobram taxa de entrega desta forma.',
+      B: 'Correto! Esta é a regra de ouro: qualquer prêmio que exija pagamento prévio é golpe. Sem exceções. Concursos legítimos como Nota Fiscal Paulista ou loterias nunca cobram para entregar.',
+      C: 'Parcialmente correto. Pesquisar é melhor que pagar, mas o golpista pode ter criado sites falsos. A regra mais segura não precisa de pesquisa: pagamento prévio para receber prêmio = golpe.',
+    },
+    discussionPrompt: 'Conversem: Vocês já participaram de sorteios legítimos? Como eles funcionam? Criem juntos uma regra familiar: qualquer mensagem de prêmio com cobrança vai direto para o lixo.',
+    tip: 'Prêmio de verdade não custa nada para retirar. Cobrar antes de entregar é sempre golpe.',
+  },
+];
+
+// ─── TRILHA JOVEM ─────────────────────────────────────────────────────────────
+
+export const youthQuestions: QuizQuestion[] = [
+  {
+    id: 1,
+    badge: 'Trilha Jovens · Questão 1 de 10',
+    context: 'As Skins Grátis — Golpe no Jogo Online',
+    intro: 'No chat do seu jogo favorito, outro jogador te manda uma mensagem:',
+    message: '"Cara, achei um site que dá skins raras de graça! Só precisa logar com sua conta do jogo. Eu já peguei a minha, olha: [link suspeito]. Corre antes de acabar!"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Clico no link e coloco meu login e senha para pegar as skins.' },
+      { id: 'B', text: 'Não clico. Reporto o link como spam e aviso que esse tipo de site rouba contas.' },
+      { id: 'C', text: 'Crio uma conta falsa só para testar o link sem arriscar minha conta principal.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Sites fora da plataforma oficial que pedem seu login e senha são armadilhas de phishing. Ao digitar seus dados, você entrega o acesso à sua conta para o golpista — que pode vender seus itens e mudar a senha.',
+      B: 'Correto! Skins e itens gratuitos fora da loja oficial do jogo são iscas clássicas. Mesmo que o "jogador" pareça amigo, a conta dele pode ter sido hackeada para espalhar o link.',
+      C: 'Incorreto. Contas falsas também têm valor para golpistas. Além disso, ao criar o hábito de clicar em links suspeitos, você treinará reflexos perigosos para o futuro.',
+    },
+    discussionPrompt: 'Conversem: Já tiveram amigos que perderam contas de jogos? O que aconteceu? Quais são os sites oficiais dos jogos que vocês jogam?',
+    tip: 'Se um site pede seu login e senha fora da plataforma oficial, é para roubar sua conta.',
+  },
+  {
+    id: 2,
+    badge: 'Trilha Jovens · Questão 2 de 10',
+    context: 'O Follow Suspeito — Perfil Falso no Instagram',
+    intro: 'Um perfil desconhecido te segue no Instagram. A foto é de uma pessoa bonita, tem 47 seguidores, 3 fotos postadas há 2 dias e a conta foi criada recentemente. Ele manda:',
+    message: '"Oi! Vi seu perfil e achei incrível. Você joga bem demais! To passando por um momento difícil e tava vendo se poderia me ajudar com R$30 pelo PIX. Posso contar com você?"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Sigo de volta e considero ajudar, pois a pessoa parece simpática.' },
+      { id: 'B', text: 'Verifico o perfil (conta nova, poucas fotos, pedido de dinheiro imediato = perfil falso) e bloqueio.' },
+      { id: 'C', text: 'Sigo de volta mas não mando dinheiro por enquanto.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Perfis criados recentemente com poucas fotos e pedidos imediatos de dinheiro são o padrão de contas falsas. A foto da pessoa bonita é geralmente roubada de outra pessoa real.',
+      B: 'Correto! Os três sinais de alerta estão todos presentes: conta recente, poucas interações e pedido de dinheiro para desconhecido. Bloquear e reportar é a resposta certa.',
+      C: 'Parcialmente correto. Não enviar dinheiro é certo, mas seguir o perfil falso ainda expõe seu perfil e contatos a futuros golpes. Bloquear corta o contato de vez.',
+    },
+    discussionPrompt: 'Conversem: Já receberam pedidos de dinheiro de desconhecidos online? Como um idoso ou criança que não conhece redes sociais poderia cair nesse golpe? Como vocês podem ensiná-los?',
+    tip: 'Conta nova + poucas fotos + pedido de dinheiro = perfil falso. Bloqueie e reporte.',
+  },
+  {
+    id: 3,
+    badge: 'Trilha Jovens · Questão 3 de 10',
+    context: 'O iPhone no Grupo — Promoção Impossível',
+    intro: 'Alguém do grupo da turma compartilha no WhatsApp:',
+    message: '"🔥 PROMOÇÃO RELÂMPAGO! iPhone 15 Pro por R$49,90! Apenas 10 unidades! Link para comprar: [loja-iphone-oferta.net] — expira em 1 hora!"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Clico rápido para comprar antes de acabar, pois parece uma oportunidade única.' },
+      { id: 'B', text: 'Não clico. Um iPhone a R$49,90 não existe — preço impossível é sinal de golpe.' },
+      { id: 'C', text: 'Clico só para ver como é a loja, sem inserir dados de pagamento.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. A urgência ("expira em 1 hora", "apenas 10 unidades") é uma técnica de pressão para impedir que você pense. O pagamento vai para golpistas e o produto nunca chega.',
+      B: 'Correto! Se parece impossível de ser verdade, é porque não é. Golpistas usam preços absurdos para atrair vítimas. Sites fora de plataformas conhecidas (Mercado Livre, Amazon, etc.) são de alto risco.',
+      C: 'Incorreto. Alguns sites maliciosos podem infectar seu dispositivo ou roubar cookies do browser apenas com a visita. Não clique em links suspeitos, mesmo "só para ver".',
+    },
+    discussionPrompt: 'Conversem: Como vocês verificariam se uma loja online é confiável antes de comprar? Pesquisem juntos o CNPJ de uma loja no site da Receita Federal.',
+    tip: 'Preço impossível + urgência artificial = golpe garantido. Não clique.',
+  },
+  {
+    id: 4,
+    badge: 'Trilha Jovens · Questão 4 de 10',
+    context: 'O Código do Amigo — Sequestro de WhatsApp',
+    intro: 'Seu amigo te manda mensagem no WhatsApp:',
+    message: '"Ei, to tentando verificar minha conta nova e mandei o código para o número errado. Chegou um SMS com 6 números aí para você? Me manda rápido, por favor!"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Mando o código, pois é meu amigo e parece urgente.' },
+      { id: 'B', text: 'Não mando. Ligo para meu amigo pelo número que tenho salvo para confirmar se foi ele.' },
+      { id: 'C', text: 'Pergunto por que ele mandou para o número errado antes de enviar.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. O golpista já sequestrou o WhatsApp do seu amigo e agora usa a conta dele para enganar os contatos. O código de 6 dígitos é o código de verificação do SEU WhatsApp — ao mandar, você perde sua conta.',
+      B: 'Correto! Ligar para o número salvo na sua agenda revela que seu amigo não pediu nada. O código SMS do WhatsApp é como uma senha — nunca compartilhe com ninguém.',
+      C: 'Parcialmente correto. O golpista tem uma história pronta. Questionar é bom, mas nenhuma justificativa torna seguro enviar o código. A ligação é a única verificação real.',
+    },
+    discussionPrompt: 'Conversem: O que acontece quando alguém perde o acesso ao WhatsApp? Ativem juntos a "Verificação em Duas Etapas" no WhatsApp de todos do grupo.',
+    tip: 'O código SMS do WhatsApp é a chave da sua conta. Nunca envie para ninguém.',
+  },
+  {
+    id: 5,
+    badge: 'Trilha Jovens · Questão 5 de 10',
+    context: 'A Foto do Grupo — Pressão Social Online',
+    intro: 'Alguém que você conheceu online e com quem troca mensagens há algumas semanas começa a insistir:',
+    message: '"Eu mando a minha foto também. Todo mundo no grupo particular faz isso. Se você confia em mim e se importa com o que a gente tem, manda uma foto mais íntima. Ninguém vai ver, juro."',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Mando a foto, pois confio nessa pessoa e não quero perder o que estamos construindo.' },
+      { id: 'B', text: 'Recuso firmemente e conto para um adulto de confiança sobre essa conversa.' },
+      { id: 'C', text: 'Mando uma foto menos íntima para satisfazer o pedido sem ir longe demais.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Essa é uma técnica de manipulação chamada "sextorsão". Após receber a foto, o golpista ameaça compartilhá-la com amigos e família caso a vítima não pague ou mande mais fotos.',
+      B: 'Correto! Qualquer pedido de foto íntima de alguém que você conheceu online é um sinal grave de abuso. Recusar e contar para um adulto — pai, mãe, professor — é a resposta certa e corajosa.',
+      C: 'Incorreto. Qualquer foto usada para pressão pode ser o início de chantagem. Não existe "foto segura" nesse contexto. A resposta é sempre recusar e buscar ajuda.',
+    },
+    discussionPrompt: 'Conversem: Como falar sobre esse assunto com alguém mais velho sem sentir vergonha? Por que esse tipo de golpe é difícil de denunciar? Quem são os adultos de confiança na vida de cada um?',
+    tip: 'Pedido de foto íntima online é abuso. Recuse, bloqueie e conte para um adulto.',
+  },
+  {
+    id: 6,
+    badge: 'Trilha Jovens · Questão 6 de 10',
+    context: 'O Email da Escola — Phishing Educacional',
+    intro: 'Você recebe um email com o logo da sua escola:',
+    message: '"Prezado(a) aluno(a), o novo Portal do Estudante exige atualização de cadastro. Informe seu CPF, data de nascimento e crie uma nova senha até amanhã para não perder o acesso às notas. [Atualizar agora]"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Preencho os dados, pois o logo da escola está no email e não quero perder acesso às notas.' },
+      { id: 'B', text: 'Verifico o endereço do remetente, noto que é suspeito e aviso meus pais e a escola.' },
+      { id: 'C', text: 'Preencho só o nome e a data de nascimento, sem colocar CPF ou senha.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Logos de escola são fáceis de copiar. O que valida um email é o endereço do remetente: se não termina no domínio oficial da escola (ex: @escola.edu.br), é falso.',
+      B: 'Correto! Verificar o remetente ("De: nomeestranho@gmail.com" em vez de "@escola.edu.br") expõe o golpe. Avisar pais e a coordenação protege outros alunos que também receberam.',
+      C: 'Incorreto. Data de nascimento combinada com nome já serve para confirmar identidade e pode ser usada em outros golpes. Nenhum dado deve ser preenchido em formulários suspeitos.',
+    },
+    discussionPrompt: 'Conversem: Como verificar se um email é oficial? Abram juntos um email de uma escola ou empresa e identifiquem o endereço do remetente. É o domínio certo?',
+    tip: 'O remetente do email é o que importa — não o logo. Endereço de Gmail para "sua escola" é sempre suspeito.',
+  },
+  {
+    id: 7,
+    badge: 'Trilha Jovens · Questão 7 de 10',
+    context: 'A Vaquinha do Grupo — PIX para Desconhecido',
+    intro: 'Você está no grupo do WhatsApp da sua turma e alguém manda:',
+    message: '"Galera, vaquinha para o presente da professora de matemática! Cada um manda R$15 para essa chave PIX: presenteturma2024@email.com — precisamos fechar hoje!"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Faço o PIX logo para não ficar de fora e não parecer "mão fechada".' },
+      { id: 'B', text: 'Antes de transferir, confirmo pessoalmente ou por ligação com o organizador se a vaquinha é real.' },
+      { id: 'C', text: 'Espero alguém do grupo confirmar que já pagou antes de pagar também.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Golpistas entram em grupos de turma ou criam grupos falsos para aplicar esse golpe. A pressão social ("não ficar de fora") e a urgência ("fechar hoje") são as ferramentas deles.',
+      B: 'Correto! Uma confirmação presencial ou por ligação direta com o organizador leva 30 segundos e protege seu dinheiro. Se a vaquinha for real, o organizador não terá problema em confirmar.',
+      C: 'Parcialmente correto. Esperar diminui o risco, mas não elimina. Outros podem confirmar por engano ou o golpista pode criar respostas falsas no grupo. A verificação direta é a mais segura.',
+    },
+    discussionPrompt: 'Conversem: Já participaram de vaquinhas online? Como organizadores sérios costumam fazer a gestão do dinheiro? Quais ferramentas são mais seguras para isso?',
+    tip: 'Sempre confirme pessoalmente com o organizador antes de fazer PIX para grupos, mesmo os da sua turma.',
+  },
+  {
+    id: 8,
+    badge: 'Trilha Jovens · Questão 8 de 10',
+    context: 'O Influencer — Golpe do Sorteio Falso',
+    intro: 'Um perfil com foto de um influencer famoso te manda uma DM:',
+    message: '"Oi! Seu perfil foi selecionado no meu sorteio especial de seguidores fiéis! Você ganhou R$1.000! Para liberar o prêmio, manda R$25 de taxa de processamento via PIX: chavesorteio@pix.com. Não perde essa!"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Pago os R$25, pois receber R$1.000 vale a pena.' },
+      { id: 'B', text: 'Ignoro e reporto o perfil. Sorteios legítimos nunca pedem pagamento prévio para receber o prêmio.' },
+      { id: 'C', text: 'Verifico se o influencer fez um post sobre esse sorteio antes de pagar.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Após o pagamento, o perfil some ou pede mais dinheiro com novas justificativas. O prêmio nunca existe. Esse golpe funciona porque R$25 parece pouco comparado aos R$1.000 prometidos.',
+      B: 'Correto! Esta é a regra mais simples: nenhum sorteio legítimo cobra para entregar o prêmio. O influencer real não usaria essa mecânica — o perfil é falso ou a conta foi hackeada.',
+      C: 'Parcialmente correto. Verificar o perfil oficial é útil, mas golpistas criam perfis muito parecidos com o original. A regra mais robusta dispensa verificação: pagamento prévio = golpe.',
+    },
+    discussionPrompt: 'Conversem: Vocês já seguiram um sorteio de influencer? Como eles funcionam de verdade? Qual é a diferença entre um sorteio real e esse golpe?',
+    tip: 'Sorteio que cobra para receber o prêmio não é sorteio — é golpe.',
+  },
+  {
+    id: 9,
+    badge: 'Trilha Jovens · Questão 9 de 10',
+    context: 'A Vaga de Emprego — Taxa de Uniforme',
+    intro: 'Você vê um anúncio no Instagram: "Contratando jovens de 14 a 17 anos — R$1.200/mês + benefícios. Sem experiência. Responda essa mensagem!" Você responde e o recrutador diz:',
+    message: '"Ótimo! Você foi aprovado(a) na entrevista! Para confirmar sua vaga, precisamos de um depósito de R$80 para uniforme e crachá. Você pode pagar hoje?"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Pago os R$80, pois R$1.200 por mês compensa muito o investimento inicial.' },
+      { id: 'B', text: 'Recuso. Nenhuma empresa legítima cobra do candidato para ocupar uma vaga de emprego.' },
+      { id: 'C', text: 'Peço para ver o contrato antes de pagar o depósito.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Após o pagamento, o "recrutador" some e a vaga nunca existiu. O golpe funciona especialmente com jovens que estão procurando o primeiro emprego e aceitam condições sem questionar.',
+      B: 'Correto! Cobrar do candidato para ser contratado é proibido por lei trabalhista. Uniformes, crachás e materiais são sempre fornecidos pela empresa. Essa cobrança em si já é a prova do golpe.',
+      C: 'Incorreto. O golpista enviará um contrato falso com CNPJ inventado. Não existe contrato verdadeiro porque não existe empresa. A cobrança antecipada é o sinal definitivo.',
+    },
+    discussionPrompt: 'Conversem: Quais são formas legítimas de buscar o primeiro emprego? Pesquisem juntos o SINE (Sistema Nacional de Emprego) e programas de jovem aprendiz.',
+    tip: 'Empresa que cobra para contratar não está contratando — está roubando.',
+  },
+  {
+    id: 10,
+    badge: 'Trilha Jovens · Questão 10 de 10',
+    context: 'O Crush Online — Pedido de Foto',
+    intro: 'Você está conversando com alguém que conheceu em um jogo há três semanas. A conversa foi evoluindo e hoje a pessoa manda:',
+    message: '"To com saudade. Manda uma selfie agora para ver seu rosto? Pode ser mais íntima se quiser — só eu vou ver, prometo. A gente tem uma conexão especial, né?"',
+    question: 'O que você faz?',
+    options: [
+      { id: 'A', text: 'Mando uma selfie normal, pois é uma foto simples e confio nessa pessoa.' },
+      { id: 'B', text: 'Não mando nenhuma foto. Peço que se comuniquem por videochamada se quiserem se ver.' },
+      { id: 'C', text: 'Mando uma foto antiga e inofensiva para satisfazer sem revelar muito.' },
+    ],
+    correct: 'B',
+    explanations: {
+      A: 'Incorreto. Mesmo uma "selfie normal" em contexto de relacionamento online pode ser usada para chantagem ou exposição. O golpista vai pedir cada vez mais depois da primeira foto.',
+      B: 'Correto! Uma videochamada ao vivo é muito mais difícil de falsificar. Se a pessoa recusar a chamada mas continuar pedindo fotos, isso confirma que algo está errado. Nunca envie fotos a pedido de quem você conheceu só online.',
+      C: 'Incorreto. Qualquer foto cedida em resposta à pressão ensina ao golpista que a pressão funciona. O próximo pedido será mais íntimo. A resposta segura é sempre não.',
+    },
+    discussionPrompt: 'Conversem: Como distinguir um relacionamento online saudável de uma manipulação? Quais comportamentos são sinais de alerta? Quem na família é o adulto para conversar sobre esses assuntos sem julgamento?',
+    tip: 'Quem você nunca viu pessoalmente não deve receber suas fotos. Videochamada ao vivo é mais segura que qualquer foto.',
+  },
+];
